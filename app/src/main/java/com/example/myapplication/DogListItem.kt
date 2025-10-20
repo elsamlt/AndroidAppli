@@ -1,6 +1,5 @@
 package com.example.myapplication
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -9,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-//import coil.compose.rememberAsyncImagePainter
+import coil3.compose.AsyncImage
 import com.example.myapplication.model.Chien
 
 @Composable
@@ -24,8 +23,8 @@ fun DogListItem(dog: Chien) {
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.padding(12.dp)
         ) {
-            Image(
-//                painter = rememberAsyncImagePainter(dog.imageUrl),
+            AsyncImage(
+                model = dog.imageUrl,
                 contentDescription = dog.name,
                 modifier = Modifier
                     .size(64.dp)
