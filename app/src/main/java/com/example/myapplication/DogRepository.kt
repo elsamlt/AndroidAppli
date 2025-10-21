@@ -8,10 +8,13 @@ import com.example.myapplication.model.Chien
 import com.example.myapplication.model.DogImage
 import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.logging.DEFAULT
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.plugins.logging.SIMPLE
+import io.ktor.client.request.get
+import io.ktor.client.request.headers
 import io.ktor.client.request.request
 
 class DogRepository {
@@ -24,7 +27,7 @@ class DogRepository {
         }
 
         install(Logging) {
-            logger = Logger.SIMPLE
+            logger = Logger.DEFAULT
             level = LogLevel.ALL
             logger = object : Logger {
                 override fun log(message: String) {
@@ -36,10 +39,18 @@ class DogRepository {
     }
 
     // récupération des races de chiens depuis l'API
-    suspend fun getChien() : List<Chien> {
-        val url = "https://api.thedogapi.com/v1/breeds"
-        return client.request(url).body()
-    }
+//    suspend fun getChien() : List<Chien> {
+//        val url = "https://api.thedogapi.com/v1/breeds"
+//        return client.request(url).body()
+//    }
+
+    // /v1/breeds
+    suspend fun getChien(): List<Chien> =
+        client.get("https://api.thedogapi.com/v1/breeds") {
+            headers {
+                append("x-api-key", API_KEY)
+            }
+        }.body()
 
     // récupération de l'image associée à la race par son id
     suspend fun dogImage(referenceId: String): DogImage {

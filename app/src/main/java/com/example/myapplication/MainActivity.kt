@@ -27,9 +27,11 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.loadDogs()
+
 
         setContent {
+
+            LaunchedEffect(true) { viewModel.loadDogs() }
             MaterialTheme {
                 val dogs by viewModel.dogs.collectAsState()
 
